@@ -1,16 +1,24 @@
-# This is a sample Python script.
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+#! /usr/bin/env python3
+import os
+import requests
 
+def send_feedback():
+        #dir = "C:/Users/Administrator/PycharmProjects/PostFeedbackREST_API/txt/"
+        dir = "/data/feedback"
+        feedback = {}
+        for file in os.listdir(dir):
+                feedback_file = open(dir + file, "r")
+                list_feedback = feedback_file.readlines()
+                feedback["title"] = list_feedback[0].rstrip('\n')
+                feedback["name"] = list_feedback[1].rstrip('\n')
+                feedback["date"] = list_feedback[2].rstrip('\n')
+                feedback["feedback"] = list_feedback[3].rstrip('\n')
+                print(feedback)
+                response = requests.post("http://35.202.87.87/feedback/", json=feedback)
+                print(response.request.body)
+                response.raise_for_status()
+                feedback_file.close()
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+        send_feedback()
