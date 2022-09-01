@@ -3,8 +3,7 @@
 import os
 import requests
 
-def send_feedback():
-        #dir = "C:/Users/Administrator/PycharmProjects/PostFeedbackREST_API/txt/"
+def send_feedback():        
         dir = "/data/feedback"
         feedback = {}
         for file in os.listdir(dir):
